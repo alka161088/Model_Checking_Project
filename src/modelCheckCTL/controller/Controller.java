@@ -28,5 +28,6 @@ public class Controller {
 	public static void main(String[] args) {
 		Controller control = new Controller();
 		
+		System.out.println("Some text here");
 	}
 }
