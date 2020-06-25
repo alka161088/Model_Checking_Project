@@ -1,0 +1,27 @@
+Test Cases
+
+I places loadable models in the root folder.  All models are labeled in the format *.kripke.
+
+Test case 1: //First model from slides
+ - model: model4.kripke
+ - formula: AGp from s2 - should fail
+ - formula: AGp from s5 - should hold
+ - formula: EGp from s2 - should hold
+
+Test case 2: //Second model from slides
+ - model: model2.kripke
+ - formula: AFc1 from s0 - should hold
+ - formula: AG(t1->AFc1) from s0 - should hold
+ - formula: E[(!c2)Uc1] from s1 - should hold
+ - formula: A[(!c2)Uc1] from s1 - should hold
+ 
+Test case 3:
+ - model: tree2.kripke
+ - formula: AXp from s0 - should fail
+ - formula: EXp from s0 - should hold
+
+Test case 4:
+ - model: tree3.kripke
+ - formula: AFp from s0 - should fail
+ - formula: AFp from s1 - should hold
+ - formula: EFp from s0 - should hold
