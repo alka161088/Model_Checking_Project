@@ -56,162 +56,23 @@ public class MainGui implements Runnable {
 		
 		javax.swing.SwingUtilities.invokeLater(this);
 	}
-	private void addMenu(final JFrame frame)
-	{
-		JMenuBar menuBar = new JMenuBar();
-		JMenu menu = new JMenu("File");
-		menuBar.add(menu);
-		
-		JMenuItem item = new JMenuItem("Load Kripke Model...");
-		item.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				int val = loadDialog.showOpenDialog(null);
-				if(val == JFileChooser.APPROVE_OPTION)
-				{
-					loadModel(loadDialog.getSelectedFile());
-				}
-			}
-		});
-		menu.add(item);
-		
-		closeModelItem = new JMenuItem("Close Kripke Model");
-		closeModelItem.setEnabled(false);
-		closeModelItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				closeModel();
-			}
-		});
-		menu.add(closeModelItem);
-		
-		menu.addSeparator();
-		
-		item = new JMenuItem("Exit");
-		item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                System.exit(0);
-            }
-
-        });
-		menu.add(item);
-		
-		//Help Menu
-		menu = new JMenu("Help");
-		menuBar.add(menu);
-		item = new JMenuItem("Usage");
-		item.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(frame,
-					    "For this assignment I use a the following CTL syntax:\n\n" +
-					    "phi ::= T | p | (!phi) | (phi && phi) | (phi || ph) | (phi -> phi)\n         | AXphi | EXphi | AFphi | EFphi | AGphi | EGphi | A[phiUphi] | E[phiUphi]\n\n" +
-					    "Parentheses are strictly enforced and white space is ignored.",
-					    "Usage",
-					    JOptionPane.PLAIN_MESSAGE);
-			}
-		});
-		menu.add(item);
-		
-		item = new JMenuItem("About");
-		item.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(frame,
-					    "Author: Trevor Hanz\n" +
-					    "For: CS 5392\n" +
-					    "Class: RRHEC",
-					    "About",
-					    JOptionPane.INFORMATION_MESSAGE);
-			}
-		});
-		menu.add(item);
-		
-		frame.setJMenuBar(menuBar);
-	}
-	private void addChecker(JPanel frame)
-	{
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createTitledBorder("Formula"));
-		panel.setLayout(new GridLayout(3,2));
-		panel.setPreferredSize(new Dimension(200, 100));
-		
-		JLabel label = new JLabel("State: ");
-		panel.add(label);
-		
-		stateSelector = new JComboBox();
-		stateSelector.addItem("----");
-		panel.add(stateSelector);
-		
-		label = new JLabel("Formula: ");
-		panel.add(label);
-		
-		formula = new JTextField(10);
-		panel.add(formula);
-		
-		JButton button = new JButton("check");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				checkModel();
-			}
-		});
-		panel.add(button);
-		
-		JPanel panel2 = new JPanel();
-		panel2.add(panel);
-		panel2.setBorder(null);
-		panel2.setLayout(new BoxLayout(panel2,BoxLayout.PAGE_AXIS));
-		
-		results = new JTextArea();
-		results.setPreferredSize(new Dimension(300, 400));
-		results.setBackground(panel.getBackground());
-		results.setBorder(BorderFactory.createTitledBorder("Results"));
-		results.setMargin(new Insets(5,5,5,5));
-		results.setWrapStyleWord(true);
-		results.setLineWrap(true);
-		panel2.add(results);
-		frame.add(panel2);
-	}
-	private void addModelView(JPanel frame)
-	{
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createTitledBorder("Model"));
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		
-		JPanel titleBox = new JPanel();
-		titleBox.setLayout(new GridLayout(2,2));
-		JLabel label = new JLabel("Loaded Model: ");
-		titleBox.add(label);
-		
-		filenameLabel = new JLabel("none");
-		titleBox.add(filenameLabel);
-		
-		label = new JLabel("Model Title: ");
-		titleBox.add(label);
-		
-		titleLabel = new JLabel(model.getKripkeModel().getTitle());
-		titleBox.add(titleLabel);
-		panel.add(titleBox);
-		
-		modelView = new ModelView();
-		panel.add(modelView);
-		frame.add(panel);
-	}
-	
+//	
 	public void run()
 	{
-		JFrame frame = new JFrame("th1382 - Model Checker");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, 0));
-		
-		addMenu(frame);
-		addChecker(panel);
-		addModelView(panel);
-		
-		frame.add(panel);
-		frame.pack();
-		frame.setVisible(true);
+//		JFrame frame = new JFrame("th1382 - Model Checker");
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setLocationRelativeTo(null);
+//		frame.setResizable(false);
+//		JPanel panel = new JPanel();
+//		panel.setLayout(new BoxLayout(panel, 0));
+//		
+//		addMenu(frame);
+//		addChecker(panel);
+//		addModelView(panel);
+//		
+//		frame.add(panel);
+//		frame.pack();
+//		frame.setVisible(true);
 	}
 	
 	private void loadModel(File file)
@@ -242,6 +103,7 @@ public class MainGui implements Runnable {
 		results.setText("");
 		formula.setText("");
 	}
+	
 	private void checkModel()
 	{
 		if(stateSelector.getItemAt(0).toString().equals("----"))
