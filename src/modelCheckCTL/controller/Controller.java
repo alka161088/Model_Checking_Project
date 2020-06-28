@@ -1,10 +1,17 @@
 package modelCheckCTL.controller;
-
+import java.util.*;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 import modelCheckCTL.model.Model;
+import modelCheckCTL.util.CTLFormula;
+import modelCheckCTL.util.KripkeStructure;
+import modelCheckCTL.util.State;
 import modelCheckCTL.view.View;
 
 public class Controller {
@@ -13,6 +20,8 @@ public class Controller {
 	private View view;
 	private String ctFile;
 	private String stateId;
+	private String ctlFormula;
+	private KripkeStructure _kripke;
 	
 	public Controller()
 	{
@@ -35,8 +44,11 @@ public class Controller {
 	{
 		stateId = id;
 	}
+	public void setCtlFormula(String formula){
+		ctlFormula = formula;
+	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Controller control = new Controller();
 		Scanner scanner = new Scanner(System.in);
 		
@@ -47,8 +59,20 @@ public class Controller {
 		System.out.println("Please enter the state ID: ");
 		String stateID = scanner.nextLine();
 		control.setStateId(stateID);
-		
+
+		System.out.println("Please enter the CTL formula: ");
+		String formula = scanner.nextLine();
+		control.setCtlFormula(formula);
+
+		Path fileNamePath = Path.of(ctlFile);
+		String modelInputString = Files.readString(fileNamePath);
+		KripkeStructure kripkeStructure = new KripkeStructure(modelInputString);
+
+		State state = kripkeStructure.FindStateByName(stateID);
+		CTLFormula ctlFormula = new CTLFormula(formula, state, kripkeStructure);
+		boolean isSatisfy = ctlFormula.IsSatisfy();
+
+		System.out.println(isSatisfy);
 		scanner.close();
-		
 	}
 }

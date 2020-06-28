@@ -20,17 +20,22 @@ public class KripkeStructure {
     }
 
     /// <summary>
-    /// Overloaded constructor
+    /// Parameterized constructor
     /// </summary>
     /// <param name="kripkeStructureDefinition"></param>
     public KripkeStructure(String kripkeStructureDefinition) {
+        transitions = new ArrayList<Transition>();
+        states = new ArrayList<State>();
+        atoms = new ArrayList<String>();
+
         try {
             /*PARSING*/
             List<String> parsedStructure = Arrays.asList(kripkeStructureDefinition
                     .replace("\n", "")
+                    .replace("\r", "")
                     .split(";"));
 
-            if (parsedStructure == null || parsedStructure.size() != 4)
+            if (parsedStructure == null || parsedStructure.size() != 3)
                 throw new IllegalArgumentException("Input file does not contain appropriate segments to construct kripke structure");
 
             List<String> stateNames = Arrays.asList(parsedStructure.get(0)

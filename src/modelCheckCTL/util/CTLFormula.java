@@ -143,7 +143,7 @@ public class CTLFormula {
             return TypeSAT.AF;
         }
         if (expression.startsWith("AG")) {
-            leftExpression = expression.substring(2, expression.length() - 2);
+            leftExpression = expression.substring(2, expression.length() - 1 );
             return TypeSAT.AG;
         }
 
@@ -170,7 +170,8 @@ public class CTLFormula {
         System.out.println(String.format("Type SAT: {0}", typeSAT.toString()));
         System.out.println(String.format("Left Expression: {0}", leftExpression));
         System.out.println(String.format("Right Expression: {0}", rightExpression));
-        System.out.println("------------------------------------");
+
+        System.out.println("-----------------------------------");
 
         switch (typeSAT) {
             case AllTrue:
@@ -295,7 +296,6 @@ public class CTLFormula {
             case Unknown:
                 throw new IllegalArgumentException("Invalid CTL expression");
         }
-
         return states;
     }
 
