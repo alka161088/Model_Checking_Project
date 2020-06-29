@@ -73,8 +73,10 @@ public class Controller {
 		boolean isSatisfy = ctlFormula.IsSatisfy();
 		
 		if(isSatisfy) {
+			System.out.println();
 			System.out.println("The model holds!");
 		} else {
+			System.out.println();
 			System.out.println("The model does not hold.");
 		}
 
