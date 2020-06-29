@@ -23,13 +23,13 @@ public class CTLFormula {
         EG,
         AF,
         AG
-    }
+    };
 
-    ;
     public KripkeStructure _kripke;
     public State state;
     public String _expression;
     public Map<String, String> _convertionString;
+    public String  leftExpression = "", rightExpression = "";
 
     public CTLFormula(String expression, State state, KripkeStructure kripke) {
         this._convertionString = new HashMap<String, String>();
@@ -73,35 +73,36 @@ public class CTLFormula {
     /// Determine whether given state satisfy given CTL formula
     /// </summary>
     /// <returns></returns>
-    private TypeSAT getTypeSAT(String expression, String leftExpression, String rightExpression) {
+    //private TypeSAT getTypeSAT(String expression, String leftExpression, String rightExpression) {
+    private TypeSAT getTypeSAT(String expression) {
         //remove extra brackets
         expression = removeExtraBrackets(expression);
 
         //look for binary implies
         if (expression.contains(">")) {
-            if (isBinaryOp(expression, ">", leftExpression, rightExpression))
+            if (isBinaryOp(expression, ">"))
                 return TypeSAT.Implies;
         }
         //look for binary and
         if (expression.contains("&")) {
-            if (isBinaryOp(expression, "&", leftExpression, rightExpression))
+            if (isBinaryOp(expression, "&"))
                 return TypeSAT.And;
         }
         //look for binary or
         if (expression.contains("|")) {
-            if (isBinaryOp(expression, "|", leftExpression, rightExpression))
+            if (isBinaryOp(expression, "|"))
                 return TypeSAT.Or;
         }
         //look for binary AU
         if (expression.startsWith("A(")) {
-            String strippedExpression = expression.substring(2, expression.length() - 3);
-            if (isBinaryOp(strippedExpression, "U", leftExpression, rightExpression))
+            String strippedExpression = expression.substring(2, expression.length() - 1);
+            if (isBinaryOp(strippedExpression, "U"))
                 return TypeSAT.AU;
         }
         //look for binary EU
         if (expression.startsWith("E(")) {
-            String strippedExpression = expression.substring(2, expression.length() - 3);
-            if (isBinaryOp(strippedExpression, "U", leftExpression, rightExpression))
+            String strippedExpression = expression.substring(2, expression.length() - 1);
+            if (isBinaryOp(strippedExpression, "U"))
                 return TypeSAT.EU;
         }
 
@@ -119,31 +120,31 @@ public class CTLFormula {
             return TypeSAT.Atomic;
         }
         if (expression.startsWith("!")) {
-            leftExpression = expression.substring(1, expression.length() - 1);
+            leftExpression = expression.substring(1, expression.length());
             return TypeSAT.Not;
         }
         if (expression.startsWith("AX")) {
-            leftExpression = expression.substring(2, expression.length() - 2);
+            leftExpression = expression.substring(2, expression.length());
             return TypeSAT.AX;
         }
         if (expression.startsWith("EX")) {
-            leftExpression = expression.substring(2, expression.length() - 2);
+            leftExpression = expression.substring(2, expression.length());
             return TypeSAT.EX;
         }
         if (expression.startsWith("EF")) {
-            leftExpression = expression.substring(2, expression.length() - 2);
+            leftExpression = expression.substring(2, expression.length());
             return TypeSAT.EF;
         }
         if (expression.startsWith("EG")) {
-            leftExpression = expression.substring(2, expression.length() - 2);
+            leftExpression = expression.substring(2, expression.length());
             return TypeSAT.EG;
         }
         if (expression.startsWith("AF")) {
-            leftExpression = expression.substring(2, expression.length() - 2);
+            leftExpression = expression.substring(2, expression.length());
             return TypeSAT.AF;
         }
         if (expression.startsWith("AG")) {
-            leftExpression = expression.substring(2, expression.length() - 1 );
+            leftExpression = expression.substring(2, expression.length() );
             return TypeSAT.AG;
         }
 
@@ -158,18 +159,20 @@ public class CTLFormula {
     /// <param name="rightExpression"></param>
     /// <returns></returns>
     private List<State> SAT(String expression) {
-        System.out.println(String.format("Original Expression: {0}", expression));
+        System.out.println(String.format("Original Expression: %s", expression));
         List<State> states = new ArrayList<State>();
 
         //from Logic in Computer Science, page 227
-        String leftExpression = "", rightExpression = "";
+        leftExpression = "";
+        rightExpression = "";
 
         //TypeSAT typeSAT = DetermineTypeSAT(expression, leftExpression, rightExpression);
-        TypeSAT typeSAT = getTypeSAT(expression, leftExpression, rightExpression);
+        //TypeSAT typeSAT = getTypeSAT(expression, leftExpression, rightExpression);
+        TypeSAT typeSAT = getTypeSAT(expression);
 
-        System.out.println(String.format("Type SAT: {0}", typeSAT.toString()));
-        System.out.println(String.format("Left Expression: {0}", leftExpression));
-        System.out.println(String.format("Right Expression: {0}", rightExpression));
+        System.out.println(String.format("Type SAT: %s", typeSAT.toString()));
+        System.out.println(String.format("Left Expression: %s", leftExpression));
+        System.out.println(String.format("Right Expression: %s", rightExpression));
 
         System.out.println("-----------------------------------");
 
@@ -228,6 +231,7 @@ public class CTLFormula {
                 //SAT (¬EX¬φ1)
                 //TODO: reevaluate axFormula
                 String axFormula = "!" + "EX" + "!" + leftExpression;
+
                 states = SAT(axFormula);
 
                 //check if states actually has link to next state
@@ -290,7 +294,9 @@ public class CTLFormula {
             case AG:
                 //SAT (¬EF¬φ1)
                 //TODO: reevaluate agFormula
-                String agFormula = "!EF!" + leftExpression;
+//                String agFormula = "!EF!" + leftExpression;
+                String agFormula = "";
+                agFormula = agFormula.concat("!EF!").concat(leftExpression);
                 states = SAT(agFormula);
                 break;
             case Unknown:
@@ -465,17 +471,17 @@ public class CTLFormula {
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    private boolean isBinaryOp(String expression, String symbol, String leftExpression, String rightExpression) {
+    private boolean isBinaryOp(String expression, String symbol) {
         boolean isBinaryOp = false;
         if (expression.contains(symbol)) {
             int openParanthesisCount = 0;
             int closeParanthesisCount = 0;
 
-            for (int i = 0; i < expression.length(); i++) {
-                String currentChar = expression.substring(i, 1);
+            for (int i = 0; i < expression.length() - 1; i++) {
+                String currentChar = expression.substring(i, i + 1);
                 if (currentChar.equals(symbol) && openParanthesisCount == closeParanthesisCount) {
                     leftExpression = expression.substring(0, i);
-                    rightExpression = expression.substring(i + 1, expression.length() - i - 1);
+                    rightExpression = expression.substring(i + 1, expression.length());
                     isBinaryOp = true;
                     break;
                 } else if (currentChar.equals("(")) {
@@ -503,7 +509,7 @@ public class CTLFormula {
 
         if (expression.startsWith("(") && expression.endsWith(")")) {
             for (int i = 0; i < expression.length() - 1; i++) {
-                String charExpression = expression.substring(i, 1);
+                String charExpression = expression.substring(i, i + 1);
 
                 if (charExpression.equals("("))
                     openParanthesis++;
@@ -512,7 +518,7 @@ public class CTLFormula {
             }
 
             if (openParanthesis - 1 == closeParanthesis)
-                newExpression = expression.substring(1, expression.length() - 2);
+                newExpression = expression.substring(1, expression.length());
         }
         return newExpression;
     }

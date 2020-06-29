@@ -18,6 +18,7 @@ public class Controller {
 	
 	private Model model;
 	private View view;
+
 	private String ctFile;
 	private String stateId;
 	private String ctlFormula;
