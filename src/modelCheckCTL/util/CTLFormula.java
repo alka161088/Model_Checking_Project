@@ -95,13 +95,13 @@ public class CTLFormula {
         }
         //look for binary AU
         if (expression.startsWith("A(")) {
-            String strippedExpression = expression.substring(2, expression.length() - 1);
+            String strippedExpression = expression.substring(2, expression.length());
             if (isBinaryOp(strippedExpression, "U"))
                 return TypeSAT.AU;
         }
         //look for binary EU
         if (expression.startsWith("E(")) {
-            String strippedExpression = expression.substring(2, expression.length() - 1);
+            String strippedExpression = expression.substring(2, expression.length());
             if (isBinaryOp(strippedExpression, "U"))
                 return TypeSAT.EU;
         }
@@ -120,7 +120,7 @@ public class CTLFormula {
             return TypeSAT.Atomic;
         }
         if (expression.startsWith("!")) {
-            leftExpression = expression.substring(1, expression.length());
+            leftExpression = expression.substring(1, expression.length() );
             return TypeSAT.Not;
         }
         if (expression.startsWith("AX")) {
@@ -522,16 +522,12 @@ public class CTLFormula {
 
             if (openParanthesis - 1 == closeParanthesis)
                 newExpression = expression.substring(1, expression.length());
-        }
-        
-        if (!expression.startsWith("(") && expression.endsWith(")")) {
+        } else if (!expression.startsWith("(") && expression.endsWith(")")) {
             newExpression = expression.substring(0, expression.length() - 1);
-        }
-        
-        if (expression.startsWith("(") && !expression.endsWith(")")) {
+        } else if (expression.startsWith("(") && !expression.endsWith(")")) {
             newExpression = expression.substring(1, expression.length());
         }
-        
+
         System.out.println("new exp: " + newExpression);
         
         return newExpression;

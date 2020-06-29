@@ -1,102 +1,0 @@
-/**
- * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
- */options{  JDK_VERSION = "1.5";  static = true;}PARSER_BEGIN(eg1)package modelCheckCTL.util;
-
-import java.io.InputStream;
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-
-public class eg1{  public static void main(String args []) throws ParseException  {
-    InputStreamReader converter = new InputStreamReader(System.in);
-	BufferedReader in = new BufferedReader(converter);
-    InputStream stream = new ByteArrayInputStream(new byte[0]);    eg1 parser = new eg1(stream);    while (true)    {      System.out.println("Reading from standard input...");      System.out.print("Enter an expression like \"AF(!p)\" :");      try      {
-        stream = new ByteArrayInputStream(in.readLine().getBytes());
-        parser.ReInit(stream);
-        ASTFormula f = parser.Formula();
-        f.dump("");      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());
-        e.printStackTrace();      }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(eg1)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN :
-{
-  < NOT : "!" >
-}
-TOKEN :
-{  < AND : "&&" >
-| < OR : "||" >
-}
-TOKEN :
-{  < THEN : "->" >
-}TOKEN :{  < ALL : "A" >| < EXISTS : "E" >}TOKEN :
-{
-  < FUTURE : "F" >
-| < GLOBALY : "G" >
-| < NEXT : "X" >
-| < UNTIL : "U" >
-}TOKEN :{  < ATOM : ["a"-"z"](["a"-"z","0"-"9"])* >}
-ASTFormula Formula():
-{}
-{  Phi()< EOF >
-  { return jjtThis; }
-}
-void Phi() #void :{}
-{    Atom()
-| "(" expr() ")"
-| Connective() 
-}
-void expr() #Expr:
-{Node n; int result=-1;}
-{  result=< NOT >.kind Phi()
-  { jjtThis.setType(result); }
-| Phi() result=exprPrime2() Phi()
-  { jjtThis.setType(result); }
-}
-int exprPrime2() #void:
-{Token t;}
-{  t=< AND >  {return t.kind;}
-| t=< OR >
-  {return t.kind;}
-| t=< THEN >
-  {return t.kind;}
-}
-void exprPrime() #void:
-{}
-{
-  < AND > Phi()
-| < OR > Phi()
-| < THEN > Phi()
-}
-void Connective() #Connective:
-{int path, temporal;}
-{
-  (  path=< ALL >.kind temporal=connPart2()
-| path=< EXISTS >.kind temporal=connPart2()
-  )
-  { jjtThis.setType(path, temporal); }
-}
-int connPart2() #void:
-{int kind;}
-{  (    kind=< NEXT >.kind Phi()
-| kind=< FUTURE >.kind Phi()
-| kind=< GLOBALY >.kind Phi()
-| "[" Phi() kind=< UNTIL >.kind Phi() "]"
-  )
-  { return kind; }
-}
-
-void Atom() #Atom:
-{Token t;}
-{  t=< ATOM >
-  {	jjtThis.setName(t.image);
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-

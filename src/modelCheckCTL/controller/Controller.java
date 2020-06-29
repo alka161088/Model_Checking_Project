@@ -1,14 +1,9 @@
 package modelCheckCTL.controller;
-import java.util.*;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
-import modelCheckCTL.model.Model;
 import modelCheckCTL.util.CTLFormula;
 import modelCheckCTL.util.KripkeStructure;
 import modelCheckCTL.util.State;
@@ -16,7 +11,7 @@ import modelCheckCTL.view.View;
 
 public class Controller {
 	
-	private Model model;
+	//private Model model;
 	private View view;
 
 	private String ctFile;
@@ -26,13 +21,14 @@ public class Controller {
 	
 	public Controller()
 	{
-		model = new Model(this);
-		view = new View(this, model);
+//		model = new Model(this);
+//		view = new View(this, model);
+		view = new View(this);
 	}
-	public void setModel(Model m)
-	{
-		model = m;
-	}
+//	public void setModel(Model m)
+//	{
+//		model = m;
+//	}
 	public void setView(View v)
 	{
 		view = v;
