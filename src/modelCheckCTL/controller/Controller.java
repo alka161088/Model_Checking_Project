@@ -71,8 +71,13 @@ public class Controller {
 		State state = kripkeStructure.FindStateByName(stateID);
 		CTLFormula ctlFormula = new CTLFormula(formula, state, kripkeStructure);
 		boolean isSatisfy = ctlFormula.IsSatisfy();
+		
+		if(isSatisfy) {
+			System.out.println("The model holds!");
+		} else {
+			System.out.println("The model does not hold.");
+		}
 
-		System.out.println(isSatisfy);
 		scanner.close();
 	}
 }

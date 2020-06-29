@@ -79,7 +79,9 @@ public class KripkeModel {
 		}
 		public boolean hasAtom(String atom)
 		{
-			if(atoms.indexOf(atom) >= 0) return true;
+			if(atoms.indexOf(atom) >= 0) {
+				return true;
+			}
 			else return false;
 		}
 		public void mark(String mark)
@@ -89,7 +91,9 @@ public class KripkeModel {
 		}
 		public boolean isMarked(String mark)
 		{
-			if(marks.indexOf(mark) >= 0) return true;
+			if(marks.indexOf(mark) >= 0) {
+				return true;
+			}
 			else return false;
 		}
 		public String toMarkings()
