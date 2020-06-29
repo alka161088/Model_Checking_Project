@@ -168,6 +168,7 @@ public class CTLFormula {
 
         //TypeSAT typeSAT = DetermineTypeSAT(expression, leftExpression, rightExpression);
         //TypeSAT typeSAT = getTypeSAT(expression, leftExpression, rightExpression);
+        expression = expression.trim();
         TypeSAT typeSAT = getTypeSAT(expression);
 
         System.out.println(String.format("Type SAT: %s", typeSAT.toString()));
@@ -506,6 +507,8 @@ public class CTLFormula {
         String newExpression = expression;
         int openParanthesis = 0;
         int closeParanthesis = 0;
+        
+        System.out.println("expression in brackets: " + expression);
 
         if (expression.startsWith("(") && expression.endsWith(")")) {
             for (int i = 0; i < expression.length() - 1; i++) {
@@ -520,6 +523,17 @@ public class CTLFormula {
             if (openParanthesis - 1 == closeParanthesis)
                 newExpression = expression.substring(1, expression.length());
         }
+        
+        if (!expression.startsWith("(") && expression.endsWith(")")) {
+            newExpression = expression.substring(0, expression.length() - 1);
+        }
+        
+        if (expression.startsWith("(") && !expression.endsWith(")")) {
+            newExpression = expression.substring(1, expression.length());
+        }
+        
+        System.out.println("new exp: " + newExpression);
+        
         return newExpression;
     }
 
