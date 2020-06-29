@@ -75,10 +75,10 @@ public class Controller {
 		
 		if(isSatisfy) {
 			System.out.println();
-			System.out.println("The model holds!");
+			System.out.println(String.format("Property %s holds in state %s!", formula, stateID));
 		} else {
 			System.out.println();
-			System.out.println("The model does not hold.");
+			System.out.println(String.format("Property %s does not hold in state %s!", formula, stateID));
 		}
 
 		scanner.close();
