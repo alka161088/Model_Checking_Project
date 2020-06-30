@@ -51,11 +51,28 @@ public class Controller {
 		
 		System.out.println("Please enter the location for the CTL formula: ");
 		String ctlFile = scanner.nextLine();
-		control.setCtFile(ctlFile);
-		
+		if(ctlFile.matches("model(.*)"))
+		{
+			control.setCtFile(ctlFile);
+		}
+		else
+		{
+			System.out.println("Input Format Not Valid\n");
+			exit(0);
+
+		}
 		System.out.println("Please enter the state ID: ");
 		String stateID = scanner.nextLine();
-		control.setStateId(stateID);
+		if(stateID.matches("s[1-4]"))
+		{
+			control.setStateId(stateID);
+		}
+		else
+		{
+			System.out.println("Input Format Not Valid: Right usage s1 or s2 or s3 or s4\n");
+			exit(0);
+
+		}
 
 		System.out.println("Please enter the CTL formula: ");
 		String formula = scanner.nextLine();
