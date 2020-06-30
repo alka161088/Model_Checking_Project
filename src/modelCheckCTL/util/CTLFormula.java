@@ -152,6 +152,10 @@ public class CTLFormula {
             expressionsHolder.setRightExpression(expression.substring(2, expression.length()));
             return TypeSAT.AG;
         }
+        if (expression.equals("")) {
+            expressionsHolder.setLeftExpression(expression);
+            return TypeSAT.AllTrue;
+        }
 
         return TypeSAT.Unknown;
     }
