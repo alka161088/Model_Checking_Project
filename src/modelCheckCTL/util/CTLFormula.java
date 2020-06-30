@@ -482,7 +482,7 @@ public class CTLFormula {
                 String currentChar = expression.substring(i, i + 1);
                 if (currentChar.equals(symbol) && openParanthesisCount == closeParanthesisCount) {
                     leftExpression = expression.substring(0, i);
-                    rightExpression = expression.substring(i + 1, expression.length()-1);
+                    rightExpression = expression.substring(i + 1, expression.length());
                     isBinaryOp = true;
                     break;
                 } else if (currentChar.equals("(")) {
@@ -507,7 +507,7 @@ public class CTLFormula {
         String newExpression = expression;
         int openParanthesis = 0;
         int closeParanthesis = 0;
-
+        
         System.out.println("expression in brackets: " + expression);
 
         if (expression.startsWith("(") && expression.endsWith(")")) {
@@ -521,15 +521,15 @@ public class CTLFormula {
             }
 
             if (openParanthesis - 1 == closeParanthesis)
-                newExpression = expression.substring(1, expression.length()-1);
+                newExpression = expression.substring(1, expression.length());
         } else if (!expression.startsWith("(") && expression.endsWith(")")) {
             newExpression = expression.substring(0, expression.length() - 1);
         } else if (expression.startsWith("(") && !expression.endsWith(")")) {
-            newExpression = expression.substring(1, expression.length()-1);
+            newExpression = expression.substring(1, expression.length());
         }
 
         System.out.println("new exp: " + newExpression);
-
+        
         return newExpression;
     }
 
