@@ -58,7 +58,7 @@ public class Controller {
 		else
 		{
 			System.out.println("Input Format Not Valid\n");
-			exit(0);
+			System.exit(0);
 
 		}
 		System.out.println("Please enter the state ID: ");
@@ -70,7 +70,7 @@ public class Controller {
 		else
 		{
 			System.out.println("Input Format Not Valid: Right usage s1 or s2 or s3 or s4\n");
-			exit(0);
+			System.exit(0);
 
 		}
 
