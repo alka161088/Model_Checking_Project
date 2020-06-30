@@ -1,4 +1,4 @@
-package modelCheckCTL.util;
+package modelCheckCTL.model;
 
 
 import java.util.ArrayList;

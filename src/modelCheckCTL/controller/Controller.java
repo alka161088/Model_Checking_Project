@@ -5,8 +5,8 @@ import java.nio.file.Path;
 import java.util.Scanner;
 
 import modelCheckCTL.util.CTLFormula;
-import modelCheckCTL.util.KripkeStructure;
-import modelCheckCTL.util.State;
+import modelCheckCTL.model.KripkeStructure;
+import modelCheckCTL.model.State;
 import modelCheckCTL.view.View;
 
 public class Controller {
