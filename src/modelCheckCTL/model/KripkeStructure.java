@@ -75,7 +75,7 @@ public class KripkeStructure {
                 State toState = FindStateByName(toStateName);
 
                 if (fromState == null || toState == null)
-                    throw new IllegalArgumentException(String.format("Invalid state is detected in transition {0}", transitionName));
+                    throw new IllegalArgumentException(String.format("Invalid state is detected in transition {%s}", transitionName));
 
                 Transition transitionObj = new Transition(transitionName, fromState, toState);
                 if (!this.transitions.contains(transitionObj))

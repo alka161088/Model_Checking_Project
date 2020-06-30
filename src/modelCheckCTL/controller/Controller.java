@@ -63,13 +63,13 @@ public class Controller {
 		}
 		System.out.println("Please enter the state ID: ");
 		String stateID = scanner.nextLine();
-		if(stateID.matches("s[1-7]"))
+		if(stateID.matches("s[1-9]"))
 		{
 			control.setStateId(stateID);
 		}
 		else
 		{
-			System.out.println("Input Format Not Valid: Right usage s1 - s7\n");
+			System.out.println("Input Format Not Valid: Right usage s1 - s9\n");
 			System.exit(0);
 
 		}

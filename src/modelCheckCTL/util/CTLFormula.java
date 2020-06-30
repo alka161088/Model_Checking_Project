@@ -511,8 +511,6 @@ public class CTLFormula {
         String newExpression = expression;
         int openParanthesis = 0;
         int closeParanthesis = 0;
-        
-        System.out.println("expression in brackets: " + expression);
 
         if (expression.startsWith("(") && expression.endsWith(")")) {
             for (int i = 0; i < expression.length() - 1; i++) {
@@ -530,8 +528,6 @@ public class CTLFormula {
         } else if (expression.startsWith("(") && !expression.endsWith(")")) {
             newExpression = expression.substring(1, expression.length());
         }
-
-        System.out.println("new exp: " + newExpression);
         
         return newExpression;
     }
