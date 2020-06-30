@@ -63,7 +63,7 @@ public class Controller {
 		}
 		System.out.println("Please enter the state ID: ");
 		String stateID = scanner.nextLine();
-		if(stateID.matches("s[1-9]"))
+		if(stateID.matches("s[0-9]"))
 		{
 			control.setStateId(stateID);
 		}
