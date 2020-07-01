@@ -18,7 +18,3 @@ s0;AXr;True
 s1;AXr;False
 s2;AXr;False
 s3;AXr;False
-s0;AG(AFq);False
-s1;AG(AFq);False
-s2;AG(AFq);False
-s3;AG(AFq);False

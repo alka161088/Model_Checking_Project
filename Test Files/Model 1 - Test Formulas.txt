@@ -78,7 +78,3 @@ s1;E(A(qUr)Ut);False
 s2;E(A(qUr)Ut);True
 s3;E(A(qUr)Ut);False
 s4;E(A(qUr)Ut);True
-s1;AG(p->A(pU(not p and A(not pUq))));True
-s2;AG(p->A(pU(not p and A(not pUq))));True
-s3;AG(p->A(pU(not p and A(not pUq))));True
-s4;AG(p->A(pU(not p and A(not pUq))));True

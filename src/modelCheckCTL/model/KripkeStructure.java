@@ -53,7 +53,7 @@ public class KripkeStructure {
                 if (!states.contains(state))
                     states.add(new State(stateName));
                 else
-                    throw new IllegalArgumentException(String.format("State {0} is defined more than once", stateName));
+                    throw new IllegalArgumentException(String.format("State %s is defined more than once", stateName));
             }
 
             //load transitions
@@ -67,7 +67,7 @@ public class KripkeStructure {
                 List<String> parsedFromToStates = Arrays.asList(parsedTransition.get(1).split("-"));
 
                 if (parsedFromToStates == null || parsedFromToStates.size() != 2)
-                    throw new IllegalArgumentException(String.format("Transition {0} is not in [from state] - [to state] format", transitionName));
+                    throw new IllegalArgumentException(String.format("Transition %s is not in [from state] - [to state] format", transitionName));
 
                 String fromStateName = parsedFromToStates.get(0);
                 String toStateName = parsedFromToStates.get(1);
@@ -75,13 +75,13 @@ public class KripkeStructure {
                 State toState = FindStateByName(toStateName);
 
                 if (fromState == null || toState == null)
-                    throw new IllegalArgumentException(String.format("Invalid state is detected in transition {%s}", transitionName));
+                    throw new IllegalArgumentException(String.format("Invalid state is detected in transition %s", transitionName));
 
                 Transition transitionObj = new Transition(transitionName, fromState, toState);
                 if (!this.transitions.contains(transitionObj))
                     this.transitions.add(transitionObj);
                 else {
-                    throw new IllegalArgumentException(String.format("Transitions from state {0} to state {1} are defined more than once"
+                    throw new IllegalArgumentException(String.format("Transitions from state %s to state %s are defined more than once"
                             , fromStateName, toStateName));
                 }
             }
@@ -91,7 +91,7 @@ public class KripkeStructure {
                 List<String> parsedStateAtomStructure = Arrays.asList(stateAtomStructure.split(":"));
 
                 if (parsedStateAtomStructure == null || parsedStateAtomStructure.size() !=2)
-                    throw new IllegalArgumentException(String.format("{0} is not a valid state: atoms definition", stateAtomStructure));
+                    throw new IllegalArgumentException(String.format("%s is not a valid state: atoms definition", stateAtomStructure));
                 String stateName = parsedStateAtomStructure.get(0).replace(" ", "");
                 String atomNames = parsedStateAtomStructure.get(1).trim();
                 List<String> parsedAtoms = Arrays.asList(atomNames.split(" "));
@@ -102,13 +102,13 @@ public class KripkeStructure {
                     } else if (!stateAtoms.contains(atom))
                         stateAtoms.add(atom);
                     else
-                        throw new IllegalArgumentException(String.format("Atom {0} is defined more than once for state {1}"
+                        throw new IllegalArgumentException(String.format("Atom %s is defined more than once for state %s"
                                 , atom, stateName));
                 }
 
                 State stateObj = FindStateByName(stateName);
                 if (stateObj == null)
-                    throw new IllegalArgumentException(String.format("State {0} is not defined", stateName));
+                    throw new IllegalArgumentException(String.format("State %s is not defined", stateName));
                 stateObj.atoms = stateAtoms;
 
                 //load to list of atoms
@@ -164,7 +164,7 @@ public class KripkeStructure {
         List<String> stateStrings = new ArrayList<String>();
         for (State state : states) {
             String atomNames = String.join(", ", state.atoms);
-            stateStrings.add(String.format("{0}({1})", state.stateName, atomNames));
+            stateStrings.add(String.format("%s(%s)", state.stateName, atomNames));
         }
 
         sb.append(String.join(", ", stateStrings));
@@ -176,7 +176,7 @@ public class KripkeStructure {
 
         List<String> transitionString = new ArrayList<String>();
         for (Transition transition : transitions) {
-            transitionString.add(String.format("{0}({1} -> {2})", transition.transitionName
+            transitionString.add(String.format("%s(%s -> %s)", transition.transitionName
                     , transition.fromState.stateName, transition.toState.stateName));
         }
 
